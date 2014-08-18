@@ -1,11 +1,10 @@
 <?php
-	$Servers = array(
-		"Connery" => 1,
-		"Miller"  => 10,
-		"Cobalt"  => 13,
-		"Emerald" => 17,
-		"Briggs"  => 25
-	);
+	//Servers
+	//	Connery 1
+	//	Miller  10
+	//	Cobalt  13
+	//	Emerald 17
+	//	Briggs  25
 	$Continents = array(
 		"Amerish" => 1, //Zone ID 6
 		"Esamir"  => 3, //Zone ID 8
@@ -15,10 +14,11 @@
 	$Factions = array(
 		"Vanu Sovereignty" => 1,
 		"New Conglomerate" => 2,
-		"Terrian Republic" => 3
+		"Terran Republic" => 3
 	);
 	//Pull Census API Data
-	$Census = file_get_contents("http://census.soe.com/s:cmd430/get/ps2:v2/map/?world_id=".$Servers[$_GET['server']]."&zone_ids=2,4,6,8");
+	$sid = "<YOUR SERVICE ID>"; //http://census.soe.com/#service-id
+	$Census = file_get_contents("http://census.soe.com/s:".$sid."/get/ps2:v2/map/?world_id=".$_GET['server']."&zone_ids=2,4,6,8");
 	$mapData = json_decode($Census, true);
 	//Return JSON, To Be added by Below Code.
 	$ContinentInfo = array();
@@ -27,6 +27,7 @@
 		$ContinentInfo['Status'] = "ERR";
 	} else {
 		$ContinentInfo['Status'] = "OK";
+		$ContinentInfo['Time'] = $mapData['timing']['total-ms'];
 	}
 	//Common Status
 	for($map = 0; $map <= 3; $map++){ //Loop 0-3 (4 conts.)
@@ -38,7 +39,7 @@
 				$NC[] = "NC";
 			} elseif($hex['RowData']['FactionId'] == $Factions['Vanu Sovereignty']){
 				$VS[] = "VS";
-			} elseif($hex['RowData']['FactionId'] == $Factions['Terrian Republic']){
+			} elseif($hex['RowData']['FactionId'] == $Factions['Terran Republic']){
 				$TR[] = "TR";
 			}
 		}
@@ -58,7 +59,7 @@
 			} elseif(count($NC) == 0 && count($VS) == 0){
 				//TR Lock
 				$ContinentInfo[array_search($map, $Continents)]['Status'] = "Locked";
-				$ContinentInfo[array_search($map, $Continents)]['Faction'] = "Terrian Republic";
+				$ContinentInfo[array_search($map, $Continents)]['Faction'] = "Terran Republic";
 			} else {
 				//Unlocked
 				$ContinentInfo[array_search($map, $Continents)]['Status'] = "Unlocked";
@@ -68,36 +69,4 @@
 		
 	}
 	echo json_encode($ContinentInfo, true);
-	
-	/*
-	Info
-	================
-	Gets the Locked / Unlocked Maps and returns in JSON
-	
-	Example Usage
-	================
-	getContinents.php?server=Briggs
-	
-	Example Output
-	================
-		{
-			"Status":"OK",
-			"Indar":{
-				"Status":"Unlocked",
-				"Faction":"-"
-			},
-			"Amerish":{
-				"Status":"Locked",
-				"Faction":"Terrian Republic"
-			},
-			"Hossin":{
-				"Status":"Locked",
-				"Faction":"Terrian Republic"
-			},
-			"Esamir":{
-				"Status":"Locked",
-				"Faction":"Vanu Sovereignty"
-			}
-		}
-	*/
 ?>
