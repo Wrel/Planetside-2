@@ -7,6 +7,12 @@
 	$outfitData = json_decode($Census, true);
 	//Return JSON, To Be added by Below Code.
 	$outfitInfo = array();
+	if($outfitData['returned'] == 0 || !isset($outfitData['returned'])){
+		$outfitInfo['Status'] = "ERR";
+	} else {
+		$outfitInfo['Status'] = "OK";
+		$outfitInfo['Time'] = $outfitData['timing']['total-ms'];
+	}
 	$outfitInfo['Outfit']['Name'] = $outfitID['outfit_list'][0]['name'];
 	$outfitInfo['Outfit']['Tag'] = $_GET['tag'];
 	$outfitInfo['Outfit']['ID'] = $outfitID['outfit_list'][0]['outfit_id'];
