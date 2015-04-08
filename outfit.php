@@ -1,6 +1,6 @@
 <?php
 	//API Service ID
-	$sid = "<YOUR SERVICE ID>"; //http://census.soe.com/#service-id
+	$sid = "<YOUR SERVICE ID>"; //http://census.daybreakgames.com/#service-id
 	//Pull Census API Data
 	$outfitID = json_decode(file_get_contents("http://census.daybreakgames.com/s:".$sid."/get/ps2/outfit/?alias=".$_GET['tag']."&c:show=outfit_id,name,member_count"), true);
 	$Census = file_get_contents("http://census.daybreakgames.com/s:".$sid."/get/ps2/outfit_member?c:limit=1000&c:resolve=online_status,character(name.first)&c:hide=member_since,member_since_date,outfit_id,rank,rank_ordinal&outfit_id=".$outfitID['outfit_list'][0]['outfit_id']);
