@@ -1,8 +1,8 @@
 <?php
 	//API Service ID
-	$sid = "<YOUR SERVICE ID>"; //http://census.soe.com/#service-id
+	$sid = "<YOUR SERVICE ID>"; //http://census.daybreakgames.com/#service-id
 	//Pull Census API Data
-	$Census = file_get_contents("https://census.soe.com/s:".$sid."/get/ps2/character/?name.first=".$name."&c:resolve=world");
+	$Census = file_get_contents("http://census.daybreakgames.com/s:".$sid."/get/ps2/character/?name.first=".$name."&c:resolve=world");
 	$playerData = json_decode($Census, true);
 	$playerInfo = array();
 	if($playerData['returned'] == 0 || !isset($playerData['returned'])){
