@@ -7,8 +7,8 @@
 	//	Briggs  25
 
 	//Pull Census API Data
-	$sid = "<YOUR SERVICE ID>"; //http://census.soe.com/#service-id
-	$Census = file_get_contents("http://census.soe.com/s:cmd430/s:".$sid."/get/ps2:v2/world_event/?world_id=".$_GET['server']."&c:limit=50&type=METAGAME");
+	$sid = "<YOUR SERVICE ID>"; //http://census.daybreakgames.com/#service-id
+	$Census = file_get_contents("http://census.daybreakgames.com/s:".$sid."/get/ps2:v2/world_event/?world_id=".$_GET['server']."&c:limit=50&type=METAGAME");
 	$alertData = json_decode($Census, true);
 	//Return JSON, To Be added by Below Code.
 	$alertInfo = array();
