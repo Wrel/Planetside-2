@@ -17,8 +17,8 @@
 		"Terran Republic" => 3
 	);
 	//Pull Census API Data
-	$sid = "<YOUR SERVICE ID>"; //http://census.soe.com/#service-id
-	$Census = file_get_contents("http://census.soe.com/s:".$sid."/get/ps2:v2/map/?world_id=".$_GET['server']."&zone_ids=2,4,6,8");
+	$sid = "<YOUR SERVICE ID>"; //http://census.daybreakgames.com/#service-id
+	$Census = file_get_contents("http://census.daybreakgames.com/s:".$sid."/get/ps2:v2/map/?world_id=".$_GET['server']."&zone_ids=2,4,6,8");
 	$mapData = json_decode($Census, true);
 	//Return JSON, To Be added by Below Code.
 	$ContinentInfo = array();
